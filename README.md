@@ -2,6 +2,12 @@
 
 This application is a simple API server for managing food items and medical records. It provides RESTful endpoints for creating, retrieving, updating, and deleting food items and medical records. The API server is built using Node.js and Express.js framework.
 
+
+GitHub Repository: [OmarHamda1996/api-server](https://github.com/OmarHamda1996/api-server)
+
+Pull Requests: [Closed Pull Requests](https://github.com/OmarHamda1996/api-server/pulls?q=is%3Apr+is%3Aclosed)
+
+
 ## Features
 
 - **Food Management**:
