@@ -1,84 +1,54 @@
 const express = require('express');
-const router = express.Router();
-const { MedicalRecord } = require('../models');
+const MedicalRecord = require('../models/medicalrecord-model');
+const MedicalRecordCollection = require('../models/medicalrecord-collection');
 
+const router = express.Router();
+const medicalRecordModel = require('../models/medicalrecord-model');
+
+const medicalRecordCollection = new MedicalRecordCollection(medicalRecordModel);
 
 router.post('/', async (req, res) => {
   try {
-    const { patientName, dateOfBirth, medicalHistory, allergies, medications } = req.body;
-    const medicalRecord = await MedicalRecord.create({
-      patientName,
-      dateOfBirth,
-      medicalHistory,
-      allergies,
-      medications,
-    });
-    res.status(201).json(medicalRecord);
+    const record = await medicalRecordCollection.create(req.body);
+    res.json(record);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
-
 
 router.get('/', async (req, res) => {
   try {
-    const medicalRecords = await MedicalRecord.findAll();
-    res.json(medicalRecords);
+    const records = await medicalRecordCollection.read();
+    res.json(records);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
-
 
 router.get('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const medicalRecord = await MedicalRecord.findByPk(id);
-    if (medicalRecord) {
-      res.json(medicalRecord);
-    } else {
-      res.status(404).json({ message: 'Medical record not found' });
-    }
+    const record = await medicalRecordCollection.readOne(req.params.id);
+    res.json(record);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
-
 
 router.put('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const { patientName, dateOfBirth, medicalHistory, allergies, medications } = req.body;
-    const medicalRecord = await MedicalRecord.findByPk(id);
-    if (medicalRecord) {
-      await medicalRecord.update({ patientName, dateOfBirth, medicalHistory, allergies, medications });
-      res.json(medicalRecord);
-    } else {
-      res.status(404).json({ message: 'Medical record not found' });
-    }
+    const record = await medicalRecordCollection.update(req.params.id, req.body);
+    res.json(record);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
 
-
 router.delete('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const medicalRecord = await MedicalRecord.findByPk(id);
-    if (medicalRecord) {
-      await medicalRecord.destroy();
-      res.json(medicalRecord);
-    } else {
-      res.status(404).json({ message: 'Medical record not found' });
-    }
+    const record = await medicalRecordCollection.delete(req.params.id);
+    res.json(record);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
 

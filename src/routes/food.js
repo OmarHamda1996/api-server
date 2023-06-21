@@ -1,78 +1,54 @@
 const express = require('express');
-const router = express.Router();
-const { Food } = require('../models');
+const Food = require('../models/food-model');
+const FoodCollection = require('../models/food-collection');
 
+const router = express.Router();
+const foodModel = require('../models/food-model');
+
+const foodCollection = new FoodCollection(foodModel);
 
 router.post('/', async (req, res) => {
   try {
-    const { name, description, price } = req.body;
-    const food = await Food.create({ name, description, price });
-    res.status(201).json(food);
+    const record = await foodCollection.create(req.body);
+    res.json(record);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
-
 
 router.get('/', async (req, res) => {
   try {
-    const food = await Food.findAll();
-    res.json(food);
+    const records = await foodCollection.read();
+    res.json(records);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
-
 
 router.get('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const food = await Food.findByPk(id);
-    if (food) {
-      res.json(food);
-    } else {
-      res.status(404).json({ message: 'Food not found' });
-    }
+    const record = await foodCollection.readOne(req.params.id);
+    res.json(record);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
-
 
 router.put('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const { name, description, price } = req.body;
-    const food = await Food.findByPk(id);
-    if (food) {
-      await food.update({ name, description, price });
-      res.json(food);
-    } else {
-      res.status(404).json({ message: 'Food not found' });
-    }
+    const record = await foodCollection.update(req.params.id, req.body);
+    res.json(record);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
 
-
 router.delete('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const food = await Food.findByPk(id);
-    if (food) {
-      await food.destroy();
-      res.json(food);
-    } else {
-      res.status(404).json({ message: 'Food not found' });
-    }
+    const record = await foodCollection.delete(req.params.id);
+    res.json(record);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: error.message });
   }
 });
 

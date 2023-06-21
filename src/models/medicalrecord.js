@@ -1,53 +1,17 @@
-module.exports = (sequelize, DataTypes) => {
-    const MedicalRecord = sequelize.define('MedicalRecord', {
-      patientName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      dateOfBirth: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
-      medicalHistory: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      allergies: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-      medications: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-    });
-  
-    return MedicalRecord;
-  };
-module.exports = (sequelize, DataTypes) => {
-  const MedicalRecord = sequelize.define('MedicalRecord', {
-    patientName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    dateOfBirth: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
-    medicalHistory: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    allergies: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    medications: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-  });
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('./index');
 
-  return MedicalRecord;
-};
+const MedicalRecord = sequelize.define('MedicalRecord', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  patientName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   
+});
+
+module.exports = MedicalRecord;
