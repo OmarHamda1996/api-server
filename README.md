@@ -39,3 +39,21 @@ Pull Requests: [Closed Pull Requests](https://github.com/OmarHamda1996/api-serve
 - **GET /medicalrecord/:id**: Retrieve a specific medical record by ID.
 - **PUT /medicalrecord/:id**: Update the details of a specific medical record.
 - **DELETE /medicalrecord/:id**: Delete a specific medical record.
+
+## Implementation Notes
+
+The API server is implemented using an Express.js framework and Sequelize ORM for working with a SQL database. It follows the MVC (Model-View-Controller) architecture pattern.
+
+The application includes the following files and directories:
+
+- **src/models**: Contains Sequelize models for food and medical records.
+- **src/controllers**: Implements the CRUD operations for food and medical records.
+- **src/routes**: Defines the RESTful routes for food and medical records.
+- **src/server.js**: The main entry point of the application where the server is initialized.
+- **src/error-handlers**: Custom error handlers for handling 404 and 500 errors.
+- **config/config.json**: Configuration file for database connection.
+- **.eslintrc.json**: ESLint configuration for linting the code.
+- **.gitignore**: Specifies files and directories to be ignored by Git.
+- **index.js**: The main file to start the application.
+- **package.json**: Contains project metadata and dependencies.
+
