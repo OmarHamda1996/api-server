@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Omar's Food and Medical-Record Management</title>
+</head>
+<body>
+  <h1>API Requests</h1>
+
+  <h2>Food API</h2>
+  <button onclick="sendPostFoodRequest()">Create Food</button>
+  <input type="text" id="foodName" placeholder="Name">
+  <input type="text" id="foodDescription" placeholder="Description">
+  <input type="number" id="foodPrice" placeholder="Price">
+  <br><br>
+  <button onclick="sendGetFoodRequest()">Get All Food</button>
+  <br><br>
+  <button onclick="sendGetFoodByIdRequest()">Get Food by ID</button>
+  <input type="text" id="foodId" placeholder="Food ID">
+  <br><br>
+  <button onclick="sendPutFoodRequest()">Update Food</button>
+  <input type="text" id="foodIdToUpdate" placeholder="Food ID">
+  <input type="text" id="updatedFoodName" placeholder="Updated Name">
+  <input type="text" id="updatedFoodDescription" placeholder="Updated Description">
+  <input type="number" id="updatedFoodPrice" placeholder="Updated Price">
+  <br><br>
+  <button onclick="sendDeleteFoodRequest()">Delete Food</button>
+  <input type="text" id="foodIdToDelete" placeholder="Food ID">
+  <br><br>
+
+  <h2>Medical Record API</h2>
+  <button onclick="sendPostMedicalRecordRequest()">Create Medical Record</button>
+  <input type="text" id="patientName" placeholder="Patient Name">
+  <input type="date" id="dateOfBirth" placeholder="Date of Birth">
+  <textarea id="medicalHistory" placeholder="Medical History"></textarea>
+  <textarea id="allergies" placeholder="Allergies"></textarea>
+  <textarea id="medications" placeholder="Medications"></textarea>
+  <br><br>
+  <button onclick="sendGetMedicalRecordRequest()">Get All Medical Records</button>
+  <br><br>
+  <button onclick="sendGetMedicalRecordByIdRequest()">Get Medical Record by ID</button>
+  <input type="text" id="medicalRecordId" placeholder="Medical Record ID">
+  <br><br>
+  <button onclick="sendPutMedicalRecordRequest()">Update Medical Record</button>
+  <input type="text" id="medicalRecordIdToUpdate" placeholder="Medical Record ID">
+  <input type="text" id="updatedPatientName" placeholder="Updated Patient Name">
+  <input type="date" id="updatedDateOfBirth" placeholder="Updated Date of Birth">
+  <textarea id="updatedMedicalHistory" placeholder="Updated Medical History"></textarea>
+  <textarea id="updatedAllergies" placeholder="Updated Allergies"></textarea>
+  <textarea id="updatedMedications" placeholder="Updated Medications"></textarea>
+  <br><br>
+  <button onclick="sendDeleteMedicalRecordRequest()">Delete Medical Record</button>
+  <input type="text" id="medicalRecordIdToDelete" placeholder="Medical Record ID">
+  <br><br>
+  <script>
+    const baseUrl = 'https://food-and-manegment-website.onrender.com';
+
+    async function sendGetFoodRequest() {
+      const response = await fetch(`${baseUrl}/food`);
+      const data = await response.json();
+      console.log('GET /food', data);
+    }
+
+    async function sendPostFoodRequest() {
+      const payload = {
+        name: document.getElementById('foodName').value,
+        description: document.getElementById('foodDescription').value,
+        price: parseFloat(document.getElementById('foodPrice').value)
+      };
+
+      const response = await fetch(`${baseUrl}/food`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      console.log('POST /food', data);
+    }
+
+    async function sendPutFoodRequest() {
+      const payload = {
+        name: document.getElementById('updatedFoodName').value,
+        description: document.getElementById('updatedFoodDescription').value,
+        price: parseFloat(document.getElementById('updatedFoodPrice').value)
+      };
+
+      const response = await fetch(`${baseUrl}/food/${document.getElementById('foodIdToUpdate').value}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      console.log('PUT /food/1', data);
+    }
+
+    async function sendDeleteFoodRequest() {
+      const response = await fetch(`${baseUrl}/food/${document.getElementById('foodIdToDelete').value}`, {
+        method: 'DELETE'
+      });
+
+      const data = await response.json();
+      console.log('DELETE /food/1', data);
+    }
+
+    async function sendGetMedicalRecordRequest() {
+      const response = await fetch(`${baseUrl}/medicalrecord`);
+      const data = await response.json();
+      console.log('GET /medicalrecord', data);
+    }
+
+    async function sendPostMedicalRecordRequest() {
+      const payload = {
+        patientName: document.getElementById('patientName').value,
+        dateOfBirth: document.getElementById('dateOfBirth').value,
+        medicalHistory: document.getElementById('medicalHistory').value,
+        allergies: document.getElementById('allergies').value,
+        medications: document.getElementById('medications').value
+      };
+
+      const response = await fetch(`${baseUrl}/medicalrecord`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      console.log('POST /medicalrecord', data);
+    }
+
+    async function sendPutMedicalRecordRequest() {
+      const payload = {
+        patientName: document.getElementById('updatedPatientName').value,
+        dateOfBirth: document.getElementById('updatedDateOfBirth').value,
+        medicalHistory: document.getElementById('updatedMedicalHistory').value,
+        allergies: document.getElementById('updatedAllergies').value,
+        medications: document.getElementById('updatedMedications').value
+      };
+
+      const response = await fetch(`${baseUrl}/medicalrecord/${document.getElementById('medicalRecordIdToUpdate').value}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      console.log('PUT /medicalrecord/1', data);
+    }
+
+    async function sendDeleteMedicalRecordRequest() {
+      const response = await fetch(`${baseUrl}/medicalrecord/${document.getElementById('medicalRecordIdToDelete').value}`, {
+        method: 'DELETE'
+      });
+
+      const data = await response.json();
+      console.log('DELETE /medicalrecord/1', data);
+    }
+  </script>
+</body>
+</html>
